@@ -1,9 +1,11 @@
 <template>
   <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6" style="border-bottom:1px solid gray">
+  <n-link to="/mn-home">
   <div class="flex items-center flex-shrink-0 text-black mr-6">
     <img style="width:20%;" src="~/static/logo.png" alt="LesMcNuggets">
     <span class="font-semibold text-xl tracking-tight">Les McNuggets</span>
   </div>
+  </n-link>
   <div class="block lg:hidden">
     <nuxt-link to="/">
     <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">

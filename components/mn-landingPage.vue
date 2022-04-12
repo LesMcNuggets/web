@@ -41,6 +41,8 @@
                     class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400"
                   >
                     <i class="fas fa-award"></i>
+                    <font-awesome-icon icon="dollar-sign"  style="font-size: 30px"/>
+                    <font-awesome-icon :icon="['fas', 'adjust']"  />
                   </div>
                   <h6 class="text-xl font-semibold">Messagerie Instantanée</h6>
                   <p class="mt-2 mb-4 text-gray-600">
@@ -424,6 +426,7 @@
         <div class="container mx-auto px-4">
           <div class="flex flex-wrap justify-center lg:-mt-64 -mt-48">
             <div class="w-full lg:w-6/12 px-4">
+            <n-link to="/mn-home">
               <div
                 class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg"
               >
@@ -435,6 +438,7 @@
                       GO
                     </button>
               </div>
+              </n-link>
             </div>
           </div>
         </div>
