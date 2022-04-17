@@ -18,14 +18,13 @@
         </div>
       </div>
       <p class="text-gray-800 dark:text-gray-100 text-sm">
-        Our interior design experts work with you to create the space that you
-        have been dreaming about.
+        {{ task.description }}
       </p>
     </div>
     <div class="flex mt-4 justify-between items-center">
       <card-date v-if="task.date" class="flex-none">{{ task.date }}</card-date>
-      <card-badge v-if="task.type" :color="badgeColor">{{
-        task.type
+      <card-badge v-for="tag in task.tags" :color="tag.color" :key="tag.id">{{
+        tag.content
       }}</card-badge>
 
       <div
@@ -112,10 +111,10 @@
 
                 <h6 class="font-semibold my-2">Labels</h6>
                 <div class="w-20">
-                  <card-badge v-if="task.type" :color="badgeColor">{{
-                    task.type
+                  <card-badge v-for="tag in task.tags" :key="tag.id">{{
+                    tag.content
                   }}</card-badge>
-                  <span v-if="!task.type">Aucun</span>
+                  <span v-if="task.tags.length === 0">Aucun</span>
                 </div>
                 <h6 class="font-semibold my-2">Deadline</h6>
                 <div class="w-20">

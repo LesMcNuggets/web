@@ -76,4 +76,15 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  router: {
+    base: "/",
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: "kanban",
+        path: "/kanban",
+        component: resolve(__dirname, "pages/kanban.vue"),
+      });
+    },
+  },
 };
