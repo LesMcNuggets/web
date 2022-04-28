@@ -7,14 +7,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "front",
+    title: "Easy Planner",
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
-      { name: "format-detection", content: "telephone=no" },
+      {charset: "utf-8"},
+      {name: "viewport", content: "width=device-width, initial-scale=1"},
+      {hid: "description", name: "description", content: ""},
+      {name: "format-detection", content: "telephone=no"},
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{rel: "icon", type: "image/x-icon", href: "/favicon.ico"}],
     bodyAttrs: {
       style:
         "background-image: linear-gradient(to left bottom, #683fb5, #4c73d4, #519de3, #81c2e8, #c1e3ee); background-image: linear-gradient(to right top, #c1e3ee, #abd6ea, #99c7e8, #8db8e4, #87a8df, #809bdb, #7c8dd6, #7c7ecf, #756fca, #6f60c4, #6b50bd, #683fb5); background-image: linear-gradient(to bottom, #c1e3ee, #abd6ea, #99c7e8, #8db8e4, #87a8df, #809bdb, #7c8dd6, #7c7ecf, #756fca, #6f60c4, #6b50bd, #683fb5);",

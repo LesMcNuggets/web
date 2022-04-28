@@ -95,6 +95,8 @@
 
 <script>
 
+import axios from "axios";
+
 export default {
   name: "landing-navbar",
   data() {
@@ -109,10 +111,34 @@ export default {
   },
   methods: {
     createAccount: function () {
-      // API CALL CREATION
+      const {login, password} = this.loginInformations
+      if (login === '' || password === '') {
+        return;
+        //TODO: Gérer l'affichage d'erreur
+      }
+      axios.post('http://192.168.1.187:3001/api/signup', {email: login, password})
+          .then(user => {
+            this.saveUser(user)
+          })
+          .catch(err => console.log(err))
+      //TODO: Gérer l'affichage d'erreur
     },
     login: function () {
-      // API CALL CONNEXION
+      const {login, password} = this.loginInformations
+      if (login === '' || password === '') {
+        return;
+        //TODO: Gérer l'affichage d'erreur
+      }
+      axios.post('http://192.168.1.187:3001/api/signin', {email: login, password})
+          .then(user => {
+            this.saveUser(user)
+          })
+          .catch(err => console.log(err))
+      //TODO: Gérer l'affichage d'erreur
+    },
+    saveUser: function (user) {
+      this.$store.commit('saveUser', user)
+      
     }
   },
 }
