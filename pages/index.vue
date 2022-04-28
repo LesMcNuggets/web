@@ -1,20 +1,20 @@
 <template>
   <div>
-    <HeaderPage />
-    <LandingPage />
+    <LandingNavbar/>
+    <LandingPage/>
   </div>
 </template>
 
 <script>
 import LandingPage from "~/components/mn-landingPage";
-import HeaderPage from "~/components/mn-header";
 import "@fortawesome/fontawesome-free";
+import LandingNavbar from "~/components/landing-page/landing-navbar";
 
 export default {
   name: "IndexPage",
   components: {
+    LandingNavbar,
     LandingPage,
-    HeaderPage,
   },
 };
 </script>
