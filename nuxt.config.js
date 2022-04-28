@@ -81,10 +81,15 @@ export default {
     base: "/",
     extendRoutes(routes, resolve) {
       routes.push({
-        name: "kanban",
-        path: "/kanban",
-        component: resolve(__dirname, "pages/kanban.vue"),
-      });
+          name: "kanban",
+          path: "/kanban",
+          component: resolve(__dirname, "pages/kanban.vue"),
+        }, {
+          name: "project-list",
+          path: "/project-list",
+          component: resolve(__dirname, "pages/project-list.vue"),
+        },
+      );
     },
   },
 };

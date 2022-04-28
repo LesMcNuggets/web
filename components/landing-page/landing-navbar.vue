@@ -15,14 +15,25 @@
                   {{ hasAccount ? 'Se connecter' : 'Créer mon compte' }}
                 </h3>
                 <div class="mt-3 w-full text-left">
+                  <div v-show="!hasAccount" class="relative z-0 mb-6 w-full group">
+                    <input v-model="loginInformations.firstname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" name="floating_firstname" placeholder=" " required type="text"/>
+                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_firstname">Ton
+                      joli prénom</label>
+                  </div>
+                  <div v-show="!hasAccount" class="relative z-0 mb-6 w-full group">
+                    <input v-model="loginInformations.lastname" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" name="floating_lastname" placeholder=" " required type="text"/>
+                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_lastname">Ton
+                      p'tit nom</label>
+                  </div>
                   <div class="relative z-0 mb-6 w-full group">
                     <input v-model="loginInformations.login" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" name="floating_email" placeholder=" " required type="email"/>
-                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_email">Email
-                      address</label>
+                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_email">Ton
+                      adresse mail</label>
                   </div>
                   <div class="relative z-0 mb-6 w-full group">
                     <input v-model="loginInformations.password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" name="floating_email" placeholder=" " required type="password"/>
-                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_email">Password</label>
+                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_email">Ton
+                      mot de passe</label>
                   </div>
                 </div>
                 <button v-show="hasAccount" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800" @click="hasAccount = !hasAccount">
@@ -39,7 +50,7 @@
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button v-show="hasAccount" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm" type="button">
+            <button v-show="hasAccount" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm" type="button" @click.stop="login">
               Connexion
             </button>
             <button v-show="!hasAccount" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm" type="button" @click.stop="createAccount">
@@ -104,19 +115,26 @@ export default {
       showModal: false,
       hasAccount: true,
       loginInformations: {
+        firstname: '',
+        lastname: '',
         login: '',
         password: '',
       }
     }
   },
+  mounted() {
+    if (this.$store.state.user.id) {
+      this.$router.replace('/project-list')
+    }
+  },
   methods: {
     createAccount: function () {
-      const {login, password} = this.loginInformations
-      if (login === '' || password === '') {
+      const {login, password, firstname, lastname} = this.loginInformations
+      if (login === '' || password === '' || firstname === '' || lastname === '') {
         return;
         //TODO: Gérer l'affichage d'erreur
       }
-      axios.post('http://192.168.1.187:3001/api/signup', {email: login, password})
+      axios.post('http://192.168.1.187:3001/api/signup', {email: login, password, firstname, lastname})
           .then(user => {
             this.saveUser(user)
           })
@@ -131,14 +149,14 @@ export default {
       }
       axios.post('http://192.168.1.187:3001/api/signin', {email: login, password})
           .then(user => {
-            this.saveUser(user)
+            this.saveUser(user.data)
           })
           .catch(err => console.log(err))
       //TODO: Gérer l'affichage d'erreur
     },
     saveUser: function (user) {
       this.$store.commit('saveUser', user)
-      
+      this.$router.replace('/project-list')
     }
   },
 }

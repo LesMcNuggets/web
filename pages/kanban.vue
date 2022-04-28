@@ -3,32 +3,35 @@
     <div class="flex justify-center">
       <div class="min-h-screen flex overflow-x-scroll py-12">
         <div
-          v-for="column in project.columns"
-          :key="column.title"
-          class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4"
+            v-for="column in project.columns"
+            :key="column.title"
+            class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4"
         >
           <p
-            class="text-gray-700 font-semibold font-sans tracking-wide text-sm"
+              class="text-gray-700 font-semibold font-sans tracking-wide text-sm"
           >
             {{ column.title }}
           </p>
           <!-- Draggable component comes from vuedraggable. It provides drag & drop functionality -->
           <draggable
-            :list="column.tasks"
-            :animation="200"
-            ghost-class="ghost-card"
-            group="tasks"
-            :move="checkMove"
+              :animation="200"
+              :list="column.tasks"
+              :move="checkMove"
+              ghost-class="ghost-card"
+              group="tasks"
           >
             <!-- Each element from here will be draggable and animated. Note :key is very important here to be unique both for draggable and animations to be smooth & consistent. -->
             <task-card
-              v-for="task in column.tasks"
-              :key="task.id"
-              :task="task"
-              class="mt-3 cursor-move"
+                v-for="task in column.tasks"
+                :key="task.id"
+                :task="task"
+                class="mt-3 cursor-move"
             ></task-card>
             <!-- </transition-group> -->
           </draggable>
+        </div>
+        <div class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4">
+          <button>Ajouter une colonne</button>
         </div>
       </div>
     </div>
@@ -38,7 +41,7 @@
 <script>
 import draggable from "vuedraggable";
 import TaskCard from "~/components/task-card";
-import { io } from "socket.io-client";
+import {io} from "socket.io-client";
 
 const socket = io("http://192.168.1.187:3001");
 export default {
@@ -78,6 +81,7 @@ export default {
   min-width: 320px;
   width: 320px;
 }
+
 /* Unfortunately @apply cannot be setup in codesandbox,
 but you'd use "@apply border opacity-50 border-blue-500 bg-gray-200" here */
 .ghost-card {

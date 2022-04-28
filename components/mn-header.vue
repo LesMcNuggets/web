@@ -11,7 +11,7 @@
             <NuxtLink
               to="/"
               class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
-              >Les McNuggets</NuxtLink
+              >Easy Planner</NuxtLink
             >
             <button
               class="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
@@ -58,7 +58,7 @@
 <script>
 export default {
   data() {
-    return { todo: "" };
+    return {todo: ""};
   },
 };
 </script>

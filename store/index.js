@@ -1,9 +1,13 @@
 export const state = () => ({
-  user: {}
+  user: {},
 })
 
+export const getters = {
+  getUser: (state) => state.user
+}
+
 export const mutations = {
-  saveUser(user) {
-    state.user = user
-  }
+  saveUser(state, newUser) {
+    state.user = newUser
+  },
 }
