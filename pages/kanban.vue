@@ -1,5 +1,40 @@
 <template>
   <div id="app">
+    <div v-show="showModalTask" aria-labelledby="modal-title" aria-modal="true" class="fixed z-20 inset-0 overflow-y-auto" role="dialog">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div aria-hidden="true" class="fixed inset-0 bg-black bg-opacity-75 transition-opacity"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span aria-hidden="true" class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+        <div class="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-center">
+                <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900">
+                  Ajouter une tâche à {{ newTaskColumn.title }}
+                </h3>
+                <div class="mt-3 w-full text-left">
+                  <div class="relative z-0 mb-6 w-full group">
+                    <input v-model="newTaskName" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" name="floating_firstname" placeholder=" " required type="text"/>
+                    <label class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" for="floating_firstname">Titre
+                      de la tâche</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm" type="button" @click.stop="addTask">
+              Créer la tâche
+            </button>
+            <button class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" type="button" @click="showModalTask = false">
+              Fermer la fenêtre
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="flex justify-center">
       <div class="min-h-screen flex overflow-x-scroll py-12">
         <div
@@ -8,17 +43,18 @@
             class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4"
         >
           <p
-              class="text-gray-700 font-semibold font-sans tracking-wide text-sm"
+              class="text-gray-700 font-semibold flex justify-between font-sans tracking-wide text-sm"
+              @click.stop="createTask(column)"
           >
-            {{ column.title }}
+            {{ column.title }} <i class="fas fa-add cursor-pointer"></i>
           </p>
           <!-- Draggable component comes from vuedraggable. It provides drag & drop functionality -->
           <draggable
               :animation="200"
               :list="column.tasks"
-              :move="checkMove"
               ghost-class="ghost-card"
               group="tasks"
+              @end="checkMove"
           >
             <!-- Each element from here will be draggable and animated. Note :key is very important here to be unique both for draggable and animations to be smooth & consistent. -->
             <task-card
@@ -30,8 +66,18 @@
             <!-- </transition-group> -->
           </draggable>
         </div>
-        <div class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4">
-          <button>Ajouter une colonne</button>
+        <div class="h-auto">
+          <button v-show="!displayNewColumnNameInput" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800" @click="displayNewColumnNameInput = true">
+            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+              Ajouter une colonne <span><i class="fas fa-add"></i></span>
+            </span>
+          </button>
+          <div v-show="displayNewColumnNameInput" class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="columnName">
+              <input id="columnName" v-model="newColumnName"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Nom de la colonne" required type="text" @keydown.enter="addColumn">
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -53,6 +99,12 @@ export default {
   data() {
     return {
       project: {},
+      displayNewColumnNameInput: false,
+      newColumnName: '',
+      newTaskName: '',
+      newTaskColumn: {title: ""},
+      showModalTask: false,
+      hasLoadedOnce: false,
     };
   },
   mounted() {
@@ -61,6 +113,10 @@ export default {
     socket.emit("retrieveProject", this.$route.params.id);
     socket.on("projectFromId", function (project) {
       scope.project = project;
+      if (!scope.hasLoadedOnce) {
+        socket.emit('joinRoom', project._id)
+        scope.hasLoadedOnce = true
+      }
     });
   },
   watch: {
@@ -70,8 +126,25 @@ export default {
   },
   methods: {
     checkMove: function () {
-      console.log("moved", this.project);
+      const tmp = JSON.parse(JSON.stringify(this.project))
+      console.log("modify", tmp);
+      socket.emit('modifyWholeProject', tmp)
     },
+    addColumn: function () {
+      if (this.newColumnName === '') return;
+      socket.emit('addColumnToProject', this.project._id, this.newColumnName)
+      this.displayNewColumnNameInput = false
+      this.newColumnName = ""
+    },
+    createTask: function (column) {
+      this.showModalTask = true
+      this.newTaskColumn = JSON.parse(JSON.stringify(column))
+    },
+    addTask: function () {
+      if (this.newTaskName === '') return;
+      socket.emit('addTaskToColumn', this.project._id, this.newTaskColumn._id, this.newTaskName)
+      this.newTaskName = ""
+    }
   },
 };
 </script>
