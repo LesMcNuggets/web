@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <HeaderPage :isProject="true"/>
     <div v-show="showModalTask" aria-labelledby="modal-title" aria-modal="true" class="fixed z-20 inset-0 overflow-y-auto" role="dialog">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div aria-hidden="true" class="fixed inset-0 bg-black bg-opacity-75 transition-opacity"></div>
@@ -81,35 +82,79 @@
         </div>
       </div>
     </div>
+    <div v-show="displayChat" class="fixed bottom-14 right-8 h-96 w-72 bg-gray-100 shadow-xl border border-black rounded-md">
+      <div class="w-full h-full flex flex-col-reverse">
+        <div class="flex self-end items-center basis-1/6 justify-between w-full border-t border-gray-300">
+          <input v-model="newMessage.content" class="block w-full py-2 pl-4 bg-gray-100 rounded-full outline-none focus:text-gray-700" name="message"
+                 placeholder="Message"
+                 required type="text" @keydown.enter="sendMessage"/>
+          <button type="submit" @click.stop="sendMessage">
+            <svg class="w-5 h-5 mr-2 text-gray-500 origin-center transform rotate-90" fill="currentColor"
+                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                  d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="flex basis-5/6 overflow-y-scroll">
+          <ul class="space-y-2 mt-2 w-full">
+            <li v-for="(msg, index) in project.messages" :key="msg._id" :class="msg.user._id === $store.state.user.id ? 'justify-end' : 'justify-start'" class="flex mx-2 w-full">
+              <div class="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
+                <span>
+                  <small v-show="index !== 0 && project.messages.length > 1 ? msg.user._id !== project.messages[index-1].user._id : true" class="text-gray-500">
+                    {{ msg.user.firstname }} {{ msg.user.lastname }}
+                    <br>
+                  </small>
+                </span> <span class="block">{{ msg.content }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <button class="fixed bottom-7 right-7" @click.stop="displayChat = !displayChat">
+      <i class="fas fa-message"></i>
+    </button>
   </div>
 </template>
 
 <script>
+import HeaderPage from "~/components/mn-header";
 import draggable from "vuedraggable";
 import TaskCard from "~/components/task-card";
-import {io} from "socket.io-client";
+import axios from "axios";
+import socket from "~/utils/socket";
 
-const socket = io("http://192.168.1.187:3001");
 export default {
   name: "App",
   components: {
+    HeaderPage,
     TaskCard,
     draggable,
   },
   data() {
     return {
-      project: {},
+      project: {
+        messages: [],
+      },
       displayNewColumnNameInput: false,
       newColumnName: '',
       newTaskName: '',
       newTaskColumn: {title: ""},
       showModalTask: false,
       hasLoadedOnce: false,
+      displayChat: false,
+      newMessage: {
+        content: '',
+        user: ""
+      }
     };
   },
   mounted() {
     let scope = this;
+    scope.checkToken(this.$store.state.user.accessToken, this.$store.state.user.id)
 
+    scope.newMessage.user = this.$store.state.user.id
     socket.emit("retrieveProject", this.$route.params.id);
     socket.on("projectFromId", function (project) {
       scope.project = project;
@@ -125,6 +170,22 @@ export default {
     },
   },
   methods: {
+    checkToken: function (token, id) {
+      if (typeof token === 'undefined')
+        this.$router.replace('/project-list')
+
+      axios.get('http://192.168.1.187:3001/api/check_token_validity', {
+        headers: {'x-access-token': token}
+      })
+          .then(() => {
+            socket.emit("retrieveProjects", id);
+          })
+          .catch(() => {
+                this.$store.commit('saveUser', {})
+                this.$router.replace('/project-list')
+              }
+          )
+    },
     checkMove: function () {
       const tmp = JSON.parse(JSON.stringify(this.project))
       console.log("modify", tmp);
@@ -144,6 +205,11 @@ export default {
       if (this.newTaskName === '') return;
       socket.emit('addTaskToColumn', this.project._id, this.newTaskColumn._id, this.newTaskName)
       this.newTaskName = ""
+    },
+    sendMessage: function () {
+      if (this.newMessage.content === '') return;
+      socket.emit('sendMessage', this.project._id, this.newMessage)
+      this.newMessage.content = ''
     }
   },
 };

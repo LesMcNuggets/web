@@ -156,6 +156,7 @@ export default {
     },
     saveUser: function (user) {
       this.$store.commit('saveUser', user)
+      localStorage.setItem('user', JSON.stringify(user))
       this.$router.replace('/project-list')
     }
   },

@@ -30,12 +30,10 @@
 </template>
 <script>
 import HeaderPage from "~/components/mn-header";
-import {io} from "socket.io-client";
 import ProjectCard from "~/components/project-card";
 import axios from "axios";
 //import VueSocketIO from "vue-socket.io";
-
-const socket = io("http://192.168.1.187:3001");
+import socket from '~/utils/socket'
 //Vue.use(VueSocketIO, SocketInstance);
 
 export default {
@@ -52,8 +50,13 @@ export default {
   },
   mounted() {
     let scope = this;
+    if (typeof this.$store.state.user.id === "undefined") {
+      const tmpUser = localStorage.getItem('user')
+      this.$store.commit("saveUser", JSON.parse(tmpUser))
+    }
     scope.checkToken(this.$store.state.user.accessToken, this.$store.state.user.id)
 
+    console.log('this.socket => ', this.$socket)
     socket.on("projectList", function (list) {
       scope.projects = list;
     });
@@ -71,6 +74,7 @@ export default {
           })
           .catch(() => {
                 this.$store.commit('saveUser', {})
+                localStorage.setItem('user', null)
                 this.$router.replace('/')
               }
           )
