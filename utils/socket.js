@@ -1,4 +1,4 @@
-import {io} from "socket.io-client"
+import { io } from "socket.io-client";
 
-const socket = io("http://192.168.1.187:3001")
-export default socket
+const socket = io("https://rocky-retreat-07018.herokuapp.com/");
+export default socket;
