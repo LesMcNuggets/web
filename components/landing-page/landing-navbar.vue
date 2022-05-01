@@ -236,17 +236,11 @@ export default {
         return;
         //TODO: Gérer l'affichage d'erreur
       }
-      axios
-        .post("https://rocky-retreat-07018.herokuapp.com/api/signup", {
-          email: login,
-          password,
-          firstname,
-          lastname,
-        })
-        .then((user) => {
-          this.saveUser(user);
-        })
-        .catch((err) => console.log(err));
+      axios.post('https://rocky-retreat-07018.herokuapp.com/api/signup', {email: login, password, firstname, lastname})
+          .then(user => {
+            this.saveUser(user.data)
+          })
+          .catch(err => console.log(err))
       //TODO: Gérer l'affichage d'erreur
     },
     login: function () {
