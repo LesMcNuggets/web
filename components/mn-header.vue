@@ -1,45 +1,142 @@
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6" style="border-bottom:1px solid gray">
-  <div class="flex items-center flex-shrink-0 text-black mr-6">
-    <img style="width:20%;" src="~/static/logo.png" alt="LesMcNuggets">
-    <span class="font-semibold text-xl tracking-tight">Les McNuggets</span>
-  </div>
-  <div class="block lg:hidden">
-    <nuxt-link to="/">
-    <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-    </button>
-    </nuxt-link>
-  </div>
-  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-    <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-purple-700 mr-4">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-</svg>
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-purple-700 mr-4">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-</svg>
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-purple-700">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-</svg>
-      </a>
+  <div>
+    <div class="sticky top-0 z-10 shadow-lg">
+      <div class="antialiased bg-gray-100 dark-mode:bg-gray-900">
+        <div
+          class="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800"
+        >
+          <div
+            class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
+          >
+            <div class="flex flex-row items-center justify-between p-4">
+              <NuxtLink
+                class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+                to="/"
+                >Easy Planner
+              </NuxtLink>
+              <button
+                class="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
+              >
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    clip-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+                    fill-rule="evenodd"
+                  ></path>
+                  <path
+                    clip-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <nav
+              class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row"
+            >
+              <NuxtLink
+                class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                to="/project-list"
+                >Liste des projets
+              </NuxtLink>
+              <button
+                v-show="isProject"
+                class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                @click="toggleModal()"
+              >
+                Liste des utilisateurs
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-purple-700 border-white hover:border-transparent hover:text-teal-500 mt-4 lg:mt-0">Connexion</a>
+    <div
+      v-if="showModal"
+      class="cursor-default overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
+    >
+      <div class="relative w-full my-6 mx-auto max-w-sm">
+        <!--content-->
+        <div
+          class="border-0 rounded-lg shadow-lg flex flex-col w-full bg-white outline-none focus:outline-none"
+        >
+          <!--header-->
+          <div class="p-5 rounded-t">
+            <div class="flex w-full justify-center">Membres du projet</div>
+            <div class="m-4 flex">
+              <input
+                v-model="newUserEmail"
+                type="email"
+                class="rounded-l-lg p-4 border-t mr-0 border-b border-l text-gray-800 border-gray-100 bg-white shadow"
+                placeholder="Email à ajouter"
+              />
+              <button
+                @click.stop="addUser"
+                class="px-8 rounded-r-lg bg-gradient-to-r from-purple-300 via-indigo-100 to-blue-200 text-gray-800 font-bold p-4 uppercase border-gray-100 border-t border-b border-r shadow"
+              >
+                <fa icon="fa-solid fa-plus" />
+              </button>
+            </div>
+            <div class="flex flex-col w-full">
+              <div
+                class="w-full border-b py-4"
+                v-for="user in project.usersId"
+                :key="user.email"
+              >
+                <p>{{ user.firstname }} {{ user.lastname }}</p>
+                <span class="text-xs">{{ user.email }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!--footer-->
+          <div
+            class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b"
+          >
+            <button
+              class="text-red-500 bg-transparent border border-solid border-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              @click="toggleModal()"
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</nav>
 </template>
 
 <script>
+import socket from "~/utils/socket";
 export default {
-  data () {
-    return { todo: '' }
-  }
-}
+  data() {
+    return {
+      todo: "",
+      showModal: false,
+      users: [],
+      newUserEmail: "",
+    };
+  },
+  props: {
+    isProject: {
+      type: Boolean,
+      default: false,
+    },
+    project: {
+      type: Object,
+      default: null,
+    },
+  },
+  methods: {
+    toggleModal: function () {
+      this.showModal = !this.showModal;
+      console.log(this.project);
+      this.users = this.project.usersId;
+    },
+    addUser: function () {
+      socket.emit("addUserToProject", this.project._id, this.newUserEmail);
+    },
+  },
+};
 </script>
