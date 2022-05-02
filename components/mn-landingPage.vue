@@ -248,7 +248,7 @@
                     Joe
                   </p>
                   <p class="mt-1 text-sm text-gray-700 uppercase font-semibold">
-                    Oui
+                    PDG
                   </p>
                 </div>
               </div>
